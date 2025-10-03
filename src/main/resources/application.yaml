@@ -1,0 +1,14 @@
+server:
+  port: 9093
+  servlet:
+    context-path: /bidding-app/v1
+
+spring:
+  application:
+    name: bidding-java-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/bidding-app
