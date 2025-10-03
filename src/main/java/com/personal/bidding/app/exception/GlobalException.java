@@ -22,4 +22,15 @@ public class GlobalException {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
+
+    @ExceptionHandler(NoDataFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNoDataFoundException(NoDataFoundException exception) {
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("timestamp", LocalDateTime.now());
+        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("message", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
 }
