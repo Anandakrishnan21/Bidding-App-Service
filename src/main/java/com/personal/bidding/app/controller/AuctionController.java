@@ -14,8 +14,8 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
-    @ApiOperation(value = "Retrieve all auction details")
-    @GetMapping("/auction")
+    @ApiOperation(value = "Retrieve all auctions details")
+    @GetMapping("/auctions")
     public List<AuctionResponse> retrieveAllAuction() {
         return auctionService.retrieveAllAuction();
     }
@@ -27,20 +27,20 @@ public class AuctionController {
     }
 
     @ApiOperation(value = "Retrieve auction by auction name")
-    @GetMapping("/auction/{auctionName}")
-    public AuctionResponse retrieveAuctionByName(@RequestParam String auctionName) {
-        return auctionService.retrieveAuction(auctionName);
+    @GetMapping("/auction/{auctionId}")
+    public AuctionResponse retrieveAuctionByName(@RequestParam String auctionId) {
+        return auctionService.retrieveAuction(auctionId);
     }
 
     @ApiOperation(value = "Update auction by auction name")
-    @PutMapping("/auction/{auctionName}")
-    public AuctionResponse updateAuctionByName(@RequestParam String auctionName, @RequestBody AuctionRequest auctionRequest) {
-        return auctionService.updateAuction(auctionName, auctionRequest);
+    @PutMapping("/auction/{auctionId}")
+    public AuctionResponse updateAuctionByName(@RequestParam String auctionId, @RequestBody AuctionRequest auctionRequest) {
+        return auctionService.updateAuction(auctionId, auctionRequest);
     }
 
     @ApiOperation(value = "Delete auction by auction name")
-    @DeleteMapping("/auction/{auctionName}")
-    public String updateAuctionByName(@RequestParam String auctionName) {
-        return auctionService.deleteAuction(auctionName);
+    @DeleteMapping("/auction/{auctionId}")
+    public String updateAuctionByName(@RequestParam String auctionId) {
+        return auctionService.deleteAuction(auctionId);
     }
 }
