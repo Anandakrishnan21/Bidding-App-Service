@@ -8,6 +8,11 @@ import java.util.Optional;
 
 @Repository
 public interface AuctionRepository extends MongoRepository<AuctionEntity, String> {
-   Optional<AuctionEntity> findByAuctionName(String auctionName);
-   Optional<AuctionEntity> findByAuctionId(String auctionId);
+
+    Optional<AuctionEntity> findByAuctionName(String auctionName);
+
+    Optional<AuctionEntity> findByAuctionId(String auctionId);
+
+    Optional<AuctionEntity> findByAuctionNameAndSportsType(String auctionName, String sportsType);
+
 }
