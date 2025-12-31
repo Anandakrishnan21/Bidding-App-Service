@@ -24,7 +24,7 @@ public class CreatePlayerQueryHandler implements QueryHandler<CreatePlayerQuery,
 
     @Override
     public PlayerResponse handle(CreatePlayerQuery query) {
-        Optional<PlayerEntity> isPlayerExisted = playerRepository.findByPlayerNameAndAuctionName(query.getPlayerRequest().getPlayerName(), query.getAuctionName());
+        Optional<PlayerEntity> isPlayerExisted = playerRepository.findByPlayerNameAndAuctionName(query.getPlayerRequest().getPlayerName(), query.getPlayerRequest().getAuctionName());
         PlayerResponse playerResponse = new PlayerResponse();
 
         try {
@@ -36,14 +36,14 @@ public class CreatePlayerQueryHandler implements QueryHandler<CreatePlayerQuery,
                     .playerName(query.getPlayerRequest().getPlayerName())
                     .playerRole(query.getPlayerRequest().getPlayerRole())
                     .playerId(UUID.randomUUID().toString())
-                    .auctionName(query.getAuctionName())
+                    .auctionName(query.getPlayerRequest().getAuctionName())
                     .basePrice(query.getPlayerRequest().getBasePrice())
                     .soldPrice(0)
                     .playerStatus("AVAILABLE")
                     .build();
 
             playerRepository.save(playerEntity);
-            log.info("PLAYER SAVED TO THE DB SUCCESSFULLY");
+            log.info("Player saved to the DB successfully");
 
             helper.copyProperties(playerEntity, playerResponse);
             return playerResponse;

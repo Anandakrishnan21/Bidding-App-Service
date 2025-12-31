@@ -22,7 +22,7 @@ public class DeletePlayerQueryHandler implements QueryHandler<DeletePlayerQuery,
 
     @Override
     public String handle(DeletePlayerQuery query) {
-        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionNameAndPlayerId(query.getAuctionName(), query.getPlayerId());
+        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionIdAndPlayerId(query.getAuctionId(), query.getPlayerId());
         try {
             if (playerEntity.isPresent()) {
                 PlayerEntity player = playerEntity.get();
@@ -30,13 +30,13 @@ public class DeletePlayerQueryHandler implements QueryHandler<DeletePlayerQuery,
                 if (player.getPlayerStatus().equalsIgnoreCase("SOLD")
                         || player.getSoldPrice() > 0.0
                         || !StringUtils.isEmpty(player.getTeamName())) {
-                    throw new PlayerSoldException("Player with id " + query.getPlayerId() + " is already sold in the auction");
+                    throw new PlayerSoldException("Player with ID " + query.getPlayerId() + " is already sold in the auction");
                 }
                 playerRepository.delete(player);
-                log.info("Player with id :: {} is successfully deleted from the auction :: {}", query.getPlayerId(), query.getAuctionName());
-                return "Player with id: " + query.getPlayerId() + " is successfully deleted from the auction: " + query.getAuctionName();
+                log.info("Player with ID :: {} is successfully deleted from the auction with ID :: {}", query.getPlayerId(), query.getPlayerId());
+                return "Player with ID :: " + query.getPlayerId() + " is successfully deleted from the auction with ID :: " + query.getPlayerId();
             } else {
-                throw new PlayerNotFoundException("Player with id: " + query.getPlayerId() + " is not present in the auction: " + query.getAuctionName());
+                throw new PlayerNotFoundException("Player with ID :: " + query.getPlayerId() + " is not present in the auction with ID :: " + query.getPlayerId());
             }
         } catch (PlayerSoldException | PlayerNotFoundException bxe) {
             throw bxe;

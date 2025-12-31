@@ -30,7 +30,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
     @Override
     @Transactional
     public PlayerResponse handle(UpdatePlayerQuery query) {
-        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionNameAndPlayerId(query.getAuctionName(), query.getPlayerId());
+        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionIdAndPlayerId(query.getAuctionId(), query.getPlayerId());
 
         PlayerResponse playerResponse = new PlayerResponse();
         try {
@@ -43,11 +43,11 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
 
                 playerRepository.save(player);
 
-                log.info("Player with id :: {} is successfully updated", query.getPlayerId());
+                log.info("Player with ID :: {} is successfully updated", query.getPlayerId());
                 helper.copyProperties(player, playerResponse);
                 return playerResponse;
             } else {
-                throw new PlayerNotFoundException("Player with id: " + query.getPlayerId() + " is not present in the auction: " + query.getAuctionName());
+                throw new PlayerNotFoundException("Player with ID :: " + query.getPlayerId() + " is not present in the auction with ID :: " + query.getPlayerId());
             }
         } catch (PlayerNotFoundException bxe) {
             throw bxe;
@@ -57,7 +57,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
     }
 
     private void updateAuction(UpdatePlayerQuery query) {
-        Optional<AuctionEntity> auctionEntity = auctionRepository.findByAuctionName(query.getAuctionName());
+        Optional<AuctionEntity> auctionEntity = auctionRepository.findByAuctionName(query.getAuctionId());
 
         if (auctionEntity.isPresent()) {
             AuctionEntity auction = auctionEntity.get();
@@ -89,7 +89,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
                 log.info("Failed to update the auction due to some error");
             }
         } else {
-            log.info("Auction with name {} is not present in the DB", query.getAuctionName());
+            log.info("Auction with ID :: {} is not present in the DB", query.getAuctionId());
         }
     }
 }

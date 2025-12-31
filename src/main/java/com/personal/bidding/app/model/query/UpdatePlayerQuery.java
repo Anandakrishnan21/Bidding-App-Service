@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UpdatePlayerQuery implements Query<PlayerResponse> {
-    private String auctionName;
+    private String auctionId;
     private String playerId;
     private PlayerRequest playerRequest;
 }

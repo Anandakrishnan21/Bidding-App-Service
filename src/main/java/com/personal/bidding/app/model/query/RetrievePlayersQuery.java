@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class RetrievePlayersQuery implements Query<List<PlayerResponse>> {
-    private String auctionName;
+    private String auctionId;
     private String playerRole;
     private String playerName;
     private String playerStatus;
