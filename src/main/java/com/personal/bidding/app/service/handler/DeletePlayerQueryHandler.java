@@ -22,7 +22,7 @@ public class DeletePlayerQueryHandler implements QueryHandler<DeletePlayerQuery,
 
     @Override
     public String handle(DeletePlayerQuery query) {
-        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionIdAndPlayerId(query.getAuctionId(), query.getPlayerId());
+        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionNameAndPlayerId(query.getAuctionName(), query.getPlayerId());
         try {
             if (playerEntity.isPresent()) {
                 PlayerEntity player = playerEntity.get();
