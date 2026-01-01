@@ -67,6 +67,7 @@ public class AuctionController {
                 .build());
     }
 
+    @ApiOperation(value = "Perform player bidding from the auction")
     @PutMapping("/auction/{auctionId}/bidPlayer")
     public BiddingResponse bidPlayer(@PathVariable String auctionId,
                                      @RequestParam String auctionName,
