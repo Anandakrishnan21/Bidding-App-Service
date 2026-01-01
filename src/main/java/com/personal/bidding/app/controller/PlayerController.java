@@ -22,12 +22,12 @@ public class PlayerController {
         this.queryExecutor = queryExecutor;
     }
 
-    @ApiOperation("Create new player by auction name")
-    @PostMapping("/{auctionId}/players")
-    public PlayerResponse createPlayer(@PathVariable String auctionId,
+    @ApiOperation("Create new player by auction id")
+    @PostMapping("/{auctionName}/players")
+    public PlayerResponse createPlayer(@PathVariable String auctionName,
                                        @RequestBody PlayerRequest playerRequest) {
         CreatePlayerQuery request = CreatePlayerQuery.builder()
-                .auctionId(auctionId)
+                .auctionName(auctionName)
                 .playerRequest(playerRequest)
                 .build();
         return queryExecutor.execute(request);
@@ -41,7 +41,7 @@ public class PlayerController {
                                                 @RequestParam(required = false) String playerStatus,
                                                 @RequestParam(required = false) String teamName) {
         RetrievePlayersQuery request = RetrievePlayersQuery.builder()
-                .auctionId(auctionId)
+                .auctionName(auctionId)
                 .playerRole(playerRole)
                 .playerName(playerName)
                 .playerStatus(playerStatus)
@@ -50,25 +50,25 @@ public class PlayerController {
         return queryExecutor.execute(request);
     }
 
-    @ApiOperation("Update player by player id and auction name")
-    @PutMapping("/{auctionId}/players")
-    public PlayerResponse updatePlayer(@PathVariable String auctionId,
+    @ApiOperation("Update player by player id and auction id")
+    @PutMapping("/{auctionName}/players")
+    public PlayerResponse updatePlayer(@PathVariable String auctionName,
                                        @RequestParam String playerId,
                                        @RequestBody PlayerRequest playerRequest) {
         UpdatePlayerQuery request = UpdatePlayerQuery.builder()
-                .auctionId(auctionId)
+                .auctionName(auctionName)
                 .playerId(playerId)
                 .playerRequest(playerRequest)
                 .build();
         return queryExecutor.execute(request);
     }
 
-    @ApiOperation("Delete player by player id and auction name")
-    @DeleteMapping("/{auctionId}/players")
-    public String deletePlayer(@PathVariable String auctionId,
+    @ApiOperation("Delete player by player id and auction id")
+    @DeleteMapping("/{auctionName}/players")
+    public String deletePlayer(@PathVariable String auctionName,
                                @RequestParam String playerId) {
         DeletePlayerQuery request = DeletePlayerQuery.builder()
-                .auctionId(auctionId)
+                .auctionName(auctionName)
                 .playerId(playerId)
                 .build();
         return queryExecutor.execute(request);

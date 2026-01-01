@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DeletePlayerQuery implements Query<String> {
-    private String auctionId;
+    private String auctionName;
     private String playerId;
 }
