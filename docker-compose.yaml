@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: bidding-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  bidding-service:
+    build: src/main/java
+    container_name: bidding-java-service
+    ports:
+      - "9093:9093"
+    depends_on:
+      - mongo
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/bidding-app
+
+volumes:
+  mongo_data:
