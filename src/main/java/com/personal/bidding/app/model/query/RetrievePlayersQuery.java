@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -19,4 +20,5 @@ public class RetrievePlayersQuery implements Query<List<PlayerResponse>> {
     private String playerName;
     private String playerStatus;
     private String teamName;
+    private Pageable pageable;
 }

@@ -17,6 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -40,6 +41,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
                 PlayerEntity player = playerEntity.get();
                 player.setPlayerName(query.getPlayerRequest().getPlayerName());
                 player.setPlayerRole(query.getPlayerRequest().getPlayerRole());
+                player.setCreatedAt(LocalDateTime.now());
 
                 playerRepository.save(player);
 
@@ -84,6 +86,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
             }
 
             if (isPlayerUpdated) {
+                auction.setUpdatedAt(LocalDateTime.now());
                 auctionRepository.save(auction);
             } else {
                 log.info("Failed to update the auction due to some error");

@@ -9,6 +9,8 @@ import com.personal.bidding.app.model.response.PlayerResponse;
 import com.personal.bidding.app.service.utils.QueryExecutor;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,18 +36,23 @@ public class PlayerController {
     }
 
     @ApiOperation("Retrieve players based on the query")
-    @GetMapping("/{auctionId}/players")
-    public List<PlayerResponse> retrievePlayers(@PathVariable String auctionId,
+    @GetMapping("/{auctionName}/players")
+    public List<PlayerResponse> retrievePlayers(@PathVariable String auctionName,
                                                 @RequestParam(required = false) String playerName,
                                                 @RequestParam(required = false) String playerRole,
                                                 @RequestParam(required = false) String playerStatus,
-                                                @RequestParam(required = false) String teamName) {
+                                                @RequestParam(required = false) String teamName,
+                                                @RequestParam int page,
+                                                @RequestParam int size) {
+
+        Pageable pageRequest = PageRequest.of(page, size);
         RetrievePlayersQuery request = RetrievePlayersQuery.builder()
-                .auctionName(auctionId)
+                .auctionName(auctionName)
                 .playerRole(playerRole)
                 .playerName(playerName)
                 .playerStatus(playerStatus)
                 .teamName(teamName)
+                .pageable(pageRequest)
                 .build();
         return queryExecutor.execute(request);
     }

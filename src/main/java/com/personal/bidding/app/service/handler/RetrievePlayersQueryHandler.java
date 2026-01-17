@@ -10,6 +10,7 @@ import com.personal.bidding.app.service.utils.QueryHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -63,6 +64,16 @@ public class RetrievePlayersQueryHandler implements QueryHandler<RetrievePlayers
         if (!StringUtils.isEmpty(query.getPlayerStatus())) {
             mongoQuery.addCriteria(Criteria.where("playerStatus").is(query.getPlayerStatus()));
         }
-        return mongoTemplate.find(mongoQuery, PlayerEntity.class);
+
+        mongoQuery.with(Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<PlayerEntity> playerEntities = mongoTemplate.find(mongoQuery, PlayerEntity.class);
+
+        int page = query.getPageable().getPageNumber();
+        int size = query.getPageable().getPageSize();
+
+        return playerEntities.stream()
+                .skip((long) page * size)
+                .limit(size)
+                .toList();
     }
 }
