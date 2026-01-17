@@ -17,10 +17,10 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.CONFLICT.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
     }
 
     @ExceptionHandler(TeamNameExistsException.class)
@@ -28,10 +28,10 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.CONFLICT.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
     }
 
     @ExceptionHandler(PlayerExistException.class)
@@ -39,10 +39,10 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.CONFLICT.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
     }
 
     @ExceptionHandler(TeamNotFoundException.class)
@@ -50,10 +50,10 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.NOT_FOUND.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
     }
 
     @ExceptionHandler(NoDataFoundException.class)
@@ -61,10 +61,10 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.NOT_FOUND.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
     }
 
     @ExceptionHandler(AuctionNotFoundException.class)
@@ -72,10 +72,10 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.NOT_FOUND.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
     }
 
     @ExceptionHandler(PlayerNotFoundException.class)
@@ -83,10 +83,10 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.NOT_FOUND.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
     }
 
     @ExceptionHandler(PlayerSoldException.class)
@@ -94,14 +94,14 @@ public class GlobalException {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("status", HttpStatus.CONFLICT.value());
         responseBody.put("message", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
     }
 
-    @ExceptionHandler(EmptyFieldException.class)
-    public ResponseEntity<Map<String, Object>> handleNoDataFoundException(EmptyFieldException exception) {
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<Map<String, Object>> handleNoDataFoundException(InvalidRequestException exception) {
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
