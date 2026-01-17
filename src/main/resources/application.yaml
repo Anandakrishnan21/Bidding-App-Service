@@ -11,4 +11,4 @@ spring:
       matching-strategy: ant_path_matcher
   data:
     mongodb:
-      uri: mongodb://localhost:27017/bidding-app
+      uri: mongodb+srv://${MONGO_USERNAME}${MONGO_PASSWORD}@cluster0.q7znmio.mongodb.net/bidding-app
