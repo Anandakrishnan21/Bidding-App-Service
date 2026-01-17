@@ -40,8 +40,10 @@ public class RetrieveAuctionQueryHandler implements QueryHandler<RetrieveAuction
             } else {
                 throw new AuctionNotFoundException("Auction with id :: " + query.getAuctionId() + " not found in the DB");
             }
-        } catch (Exception e) {
-            throw new BusinessException("FAILED TO RETRIEVE AUCTION :: ", e.getCause());
+        } catch (AuctionNotFoundException bxe) {
+            throw bxe;
+        } catch (Exception exe) {
+            throw new BusinessException("FAILED TO RETRIEVE AUCTION :: ", exe.getCause());
         }
     }
 }

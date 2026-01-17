@@ -2,8 +2,7 @@ package com.personal.bidding.app.service.handler;
 
 import com.personal.bidding.app.exception.AuctionNotFoundException;
 import com.personal.bidding.app.exception.BusinessException;
-import com.personal.bidding.app.exception.EmptyFieldException;
-import com.personal.bidding.app.exception.NoDataFoundException;
+import com.personal.bidding.app.exception.InvalidRequestException;
 import com.personal.bidding.app.model.entity.AuctionEntity;
 import com.personal.bidding.app.model.query.UpdateAuctionQuery;
 import com.personal.bidding.app.model.response.AuctionResponse;
@@ -55,12 +54,12 @@ public class UpdateAuctionQueryHandler implements QueryHandler<UpdateAuctionQuer
                     BeanUtils.copyProperties(auctionEntity, auctionResponse);
                     return auctionResponse;
                 } else {
-                    throw new EmptyFieldException("Few fields are appeared to be empty");
+                    throw new InvalidRequestException("Required field should not be empty");
                 }
             } else {
                 throw new AuctionNotFoundException("Auction with id :: " + query.getAuctionId() + " not found in the DB");
             }
-        } catch (AuctionNotFoundException | EmptyFieldException bex) {
+        } catch (AuctionNotFoundException | InvalidRequestException bex) {
             throw bex;
         } catch (Exception exe) {
             throw new BusinessException("FAILED TO UPDATE THE AUCTION :: ", exe.getCause());

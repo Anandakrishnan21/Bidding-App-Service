@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
@@ -65,6 +66,7 @@ public class PlayerBiddingQueryHandler implements QueryHandler<PlayerBiddingQuer
                                 }
                             });
 
+                    auctionEntity.setUpdatedAt(LocalDateTime.now());
                     auctionRepository.save(auctionEntity);
                     log.info("BIDDING SUCCESSFUL FOR PLAYER {}", playerDetails.getPlayerName());
                     updatePlayerEntity(playerEntity.get(), query.getSoldPrice(), query.getTeamName());
@@ -95,6 +97,7 @@ public class PlayerBiddingQueryHandler implements QueryHandler<PlayerBiddingQuer
         playerEntity.setSoldPrice(soldPrice);
         playerEntity.setPlayerStatus("SOLD");
         playerEntity.setTeamName(teamName);
+        playerEntity.setUpdatedAt(LocalDateTime.now());
         playerRepository.save(playerEntity);
     }
 
@@ -113,6 +116,8 @@ public class PlayerBiddingQueryHandler implements QueryHandler<PlayerBiddingQuer
                 .playerRole(playerEntity.getPlayerRole())
                 .basePrice(playerEntity.getBasePrice())
                 .soldPrice(soldPrice)
+                .createdAt(playerEntity.getCreatedAt())
+                .createdAt(playerEntity.getUpdatedAt())
                 .build();
     }
 }

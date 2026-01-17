@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,12 +41,14 @@ public class CreateAuctionQueryHandler implements QueryHandler<CreateAuctionQuer
                     .increaseRate(query.getIncreaseRate())
                     .maxPlayers(query.getMaxPlayers())
                     .teamPoints(query.getTeamPoints())
+                    .createdAt(LocalDateTime.now())
                     .build();
 
             auctionRepository.save(auction);
 
             log.info("Auction with id :: {} added to the DB", auction.getId());
-            helper.copyProperties(auctionEntity, auctionResponse);
+            helper.copyProperties(auction, auctionResponse);
+            log.info("Auction Response :: {}", auctionResponse);
             return auctionResponse;
 
         } catch (AuctionExistsException bex) {

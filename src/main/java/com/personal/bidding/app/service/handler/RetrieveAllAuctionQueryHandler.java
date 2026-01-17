@@ -36,6 +36,8 @@ public class RetrieveAllAuctionQueryHandler implements QueryHandler<RetrieveAllA
                             .teamPoints(auctionEntity.getTeamPoints())
                             .minimumBid(auctionEntity.getMinimumBid())
                             .maxPlayers(auctionEntity.getMaxPlayers())
+                            .createdAt(auctionEntity.getCreatedAt())
+                            .updatedAt(auctionEntity.getUpdatedAt())
                             .build();
 
                     auctionResponseList.add(auctionResponse);
