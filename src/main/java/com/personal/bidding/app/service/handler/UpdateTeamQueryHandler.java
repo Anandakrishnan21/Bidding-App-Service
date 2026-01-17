@@ -16,6 +16,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +49,7 @@ public class UpdateTeamQueryHandler implements QueryHandler<UpdateTeamQuery, Tea
                         }
                     }
 
+                    auction.setUpdatedAt(LocalDateTime.now());
                     auctionRepository.save(auction);
 
                     log.info("Team details updated for the team :: {}", query.getTeamName());

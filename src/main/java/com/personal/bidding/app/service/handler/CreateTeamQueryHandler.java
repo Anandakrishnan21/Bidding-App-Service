@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -56,6 +57,7 @@ public class CreateTeamQueryHandler implements QueryHandler<CreateTeamQuery, Tea
                     teamDetailsList.add(teamDetails);
                     auction.setTeamDetails(teamDetailsList);
 
+                    auction.setUpdatedAt(LocalDateTime.now());
                     auctionRepository.save(auction);
                     log.info("New team added to the auction DB with name :: {}", query.getTeamRequest().getTeamName());
 

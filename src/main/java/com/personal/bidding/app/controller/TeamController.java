@@ -8,6 +8,8 @@ import com.personal.bidding.app.model.request.TeamRequest;
 import com.personal.bidding.app.model.response.TeamResponse;
 import com.personal.bidding.app.service.utils.QueryExecutor;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,10 +36,14 @@ public class TeamController {
     @ApiOperation(value = "Retrieve teams based on search query")
     @GetMapping("/{auctionId}/team")
     public List<TeamResponse> retrieveAllTeam(@PathVariable String auctionId,
-                                              @RequestParam(required = false) String teamName) {
+                                              @RequestParam(required = false) String teamName,
+                                              @RequestParam int page,
+                                              @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page, size);
         RetrieveAllTeamQuery request = RetrieveAllTeamQuery.builder()
                 .auctionId(auctionId)
                 .teamName(teamName)
+                .pageable(pageable)
                 .build();
         return queryExecutor.execute(request);
     }

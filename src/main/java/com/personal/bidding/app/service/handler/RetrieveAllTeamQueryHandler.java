@@ -76,9 +76,14 @@ public class RetrieveAllTeamQueryHandler implements QueryHandler<RetrieveAllTeam
 
         List<AuctionEntity> auctionEntities = mongoTemplate.find(mongoQuery, AuctionEntity.class);
 
+        int page = query.getPageable().getPageNumber();
+        int size = query.getPageable().getPageSize();
+
         return auctionEntities.stream()
                 .flatMap(auction -> auction.getTeamDetails().stream())
                 .filter(team -> team.getTeamName().equals(query.getTeamName()))
+                .skip((long) page * size)
+                .limit(size)
                 .toList();
     }
 }
