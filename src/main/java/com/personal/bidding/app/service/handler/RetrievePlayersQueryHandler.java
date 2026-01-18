@@ -39,10 +39,10 @@ public class RetrievePlayersQueryHandler implements QueryHandler<RetrievePlayers
                     helper.copyProperties(player, playerResponse);
                     playerResponseList.add(playerResponse);
                 }
-                log.info("Players available in the auction :: {} are Players :: {}", query.getAuctionName(), playerResponseList);
+                log.info("Players available in the auction with ID :: {} are Players :: {}", query.getAuctionId(), playerResponseList);
                 return playerResponseList;
             } else {
-                throw new PlayerNotFoundException("No players are available in the auction :: " + query.getAuctionName() + " with the respective query");
+                throw new PlayerNotFoundException("No players are available in the auction with ID :: " + query.getAuctionId() + " with the respective query");
             }
         } catch (PlayerNotFoundException bex) {
             throw bex;
@@ -53,7 +53,7 @@ public class RetrievePlayersQueryHandler implements QueryHandler<RetrievePlayers
 
     private List<PlayerEntity> searchFilter(RetrievePlayersQuery query) {
         Query mongoQuery = new Query();
-        mongoQuery.addCriteria(Criteria.where("auctionName").is(query.getAuctionName()));
+        mongoQuery.addCriteria(Criteria.where("auctionId").is(query.getAuctionId()));
 
         if (!StringUtils.isEmpty(query.getPlayerName())) {
             mongoQuery.addCriteria(Criteria.where("playerName").is(query.getPlayerName()));

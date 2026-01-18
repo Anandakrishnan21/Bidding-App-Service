@@ -31,7 +31,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
     @Override
     @Transactional
     public PlayerResponse handle(UpdatePlayerQuery query) {
-        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionNameAndPlayerId(query.getAuctionName(), query.getPlayerId());
+        Optional<PlayerEntity> playerEntity = playerRepository.findByPlayerId(query.getPlayerId());
 
         PlayerResponse playerResponse = new PlayerResponse();
         try {
@@ -49,7 +49,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
                 helper.copyProperties(player, playerResponse);
                 return playerResponse;
             } else {
-                throw new PlayerNotFoundException("Player with ID :: " + query.getPlayerId() + " is not present in the auction with ID :: " + query.getPlayerId());
+                throw new PlayerNotFoundException("Player with ID :: " + query.getPlayerId() + " is not present in the auction with ID :: " + query.getAuctionId());
             }
         } catch (PlayerNotFoundException bxe) {
             throw bxe;
@@ -59,7 +59,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
     }
 
     private void updateAuction(UpdatePlayerQuery query) {
-        Optional<AuctionEntity> auctionEntity = auctionRepository.findByAuctionName(query.getAuctionName());
+        Optional<AuctionEntity> auctionEntity = auctionRepository.findByAuctionId(query.getAuctionId());
 
         if (auctionEntity.isPresent()) {
             AuctionEntity auction = auctionEntity.get();
@@ -92,7 +92,7 @@ public class UpdatePlayerQueryHandler implements QueryHandler<UpdatePlayerQuery,
                 log.info("Failed to update the auction due to some error");
             }
         } else {
-            log.info("Auction :: {} is not present in the DB", query.getAuctionName());
+            log.info("Auction with ID :: {} is not present in the DB", query.getAuctionId());
         }
     }
 }

@@ -29,13 +29,14 @@ public class CreatePlayerQueryHandler implements QueryHandler<CreatePlayerQuery,
 
     @Override
     public PlayerResponse handle(CreatePlayerQuery query) {
-        Optional<PlayerEntity> isPlayerExisted = playerRepository.findByPlayerNameAndAuctionName(query.getPlayerRequest().getPlayerName(), query.getAuctionName());
-        Optional<AuctionEntity> isAuctionExist = auctionRepository.findByAuctionName(query.getAuctionName());
-
+        Optional<AuctionEntity> isAuctionExist = auctionRepository.findByAuctionId(query.getAuctionId());
         PlayerResponse playerResponse = new PlayerResponse();
 
         try {
             if (isAuctionExist.isPresent()) {
+                AuctionEntity auction = isAuctionExist.get();
+
+                Optional<PlayerEntity> isPlayerExisted = playerRepository.findByPlayerNameAndAuctionName(query.getPlayerRequest().getPlayerName(), auction.getAuctionName());
                 if (isPlayerExisted.isPresent()) {
                     throw new PlayerExistException("Player exist in the DB, please create a new player");
                 }
@@ -44,7 +45,7 @@ public class CreatePlayerQueryHandler implements QueryHandler<CreatePlayerQuery,
                         .playerName(query.getPlayerRequest().getPlayerName())
                         .playerRole(query.getPlayerRequest().getPlayerRole())
                         .playerId(UUID.randomUUID().toString())
-                        .auctionName(query.getAuctionName())
+                        .auctionName(auction.getAuctionName())
                         .basePrice(query.getPlayerRequest().getBasePrice())
                         .soldPrice(0)
                         .playerStatus("AVAILABLE")
@@ -57,9 +58,8 @@ public class CreatePlayerQueryHandler implements QueryHandler<CreatePlayerQuery,
                 helper.copyProperties(playerEntity, playerResponse);
                 return playerResponse;
             } else {
-                throw new AuctionNotFoundException("Auction with name :: " + query.getAuctionName() + " is not present in the DB");
+                throw new AuctionNotFoundException("Auction with ID :: " + query.getAuctionId() + " is not present in the DB");
             }
-
         } catch (AuctionNotFoundException | PlayerExistException bex) {
             throw bex;
         } catch (Exception exe) {

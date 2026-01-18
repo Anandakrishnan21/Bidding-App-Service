@@ -22,7 +22,7 @@ public class DeletePlayerQueryHandler implements QueryHandler<DeletePlayerQuery,
 
     @Override
     public String handle(DeletePlayerQuery query) {
-        Optional<PlayerEntity> playerEntity = playerRepository.findByAuctionNameAndPlayerId(query.getAuctionName(), query.getPlayerId());
+        Optional<PlayerEntity> playerEntity = playerRepository.findByPlayerId(query.getPlayerId());
         try {
             if (playerEntity.isPresent()) {
                 PlayerEntity player = playerEntity.get();
@@ -33,10 +33,10 @@ public class DeletePlayerQueryHandler implements QueryHandler<DeletePlayerQuery,
                     throw new PlayerSoldException("Player with ID " + query.getPlayerId() + " is already sold in the auction");
                 }
                 playerRepository.delete(player);
-                log.info("Player with ID :: {} is successfully deleted from the auction with ID :: {}", query.getPlayerId(), query.getPlayerId());
-                return "Player with ID :: " + query.getPlayerId() + " is successfully deleted from the auction with ID :: " + query.getPlayerId();
+                log.info("Player with ID :: {} is successfully deleted from the auction with ID :: {}", query.getPlayerId(), query.getAuctionId());
+                return "Player with ID :: " + query.getPlayerId() + " is successfully deleted from the auction with ID :: " + query.getAuctionId();
             } else {
-                throw new PlayerNotFoundException("Player with ID :: " + query.getPlayerId() + " is not present in the auction with ID :: " + query.getPlayerId());
+                throw new PlayerNotFoundException("Player with ID :: " + query.getPlayerId() + " is not present in the auction with ID :: " + query.getAuctionId());
             }
         } catch (PlayerSoldException | PlayerNotFoundException bxe) {
             throw bxe;

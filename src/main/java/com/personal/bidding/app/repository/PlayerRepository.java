@@ -13,6 +13,4 @@ public interface PlayerRepository extends MongoRepository<PlayerEntity, String> 
 
     Optional<PlayerEntity> findByPlayerId(String playerId);
 
-    Optional<PlayerEntity> findByAuctionNameAndPlayerId(String auctionName, String playerId);
-
 }
