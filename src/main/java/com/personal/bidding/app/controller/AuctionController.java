@@ -43,7 +43,7 @@ public class AuctionController {
     }
 
     @ApiOperation(value = "Retrieve all auction details")
-    @GetMapping("/auctions")
+    @GetMapping("/auction")
     public List<AuctionResponse> retrieveAllAuction() {
         return queryExecutor.execute(RetrieveAllAuctionQuery.builder().build());
     }
