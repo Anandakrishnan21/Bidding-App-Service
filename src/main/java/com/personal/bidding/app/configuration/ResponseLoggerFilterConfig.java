@@ -36,6 +36,7 @@ public class ResponseLoggerFilterConfig extends OncePerRequestFilter {
     }
 
     private void logDetails(ContentCachingRequestWrapper request, ContentCachingResponseWrapper response) {
+
         String requestBody = new String(request.getContentAsByteArray(), StandardCharsets.UTF_8);
 
         String responseBody = new String(response.getContentAsByteArray(), StandardCharsets.UTF_8);
